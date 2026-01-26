@@ -4,7 +4,6 @@ import com.csg.minipay.dto.ProcResult;
 import com.csg.minipay.repository.PaymentProcedureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -12,8 +11,8 @@ public class PaymentService {
 
     private final PaymentProcedureRepository repository;
 
-    @Transactional
+    // DB-managed 트랜잭션: DB 프로시저가 COMMIT/ROLLBACK 하므로 @Transactional 제거 권장
     public ProcResult pay(Long paymentId, String requestId, Long amount) {
-        return repository.payApp(paymentId, requestId, amount);
+        return repository.payDbManaged(paymentId, requestId, amount);
     }
 }
