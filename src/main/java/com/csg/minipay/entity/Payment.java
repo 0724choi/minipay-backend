@@ -53,4 +53,23 @@ public class Payment {
         p.versionNo = 0L;
         return p;
     }
+    
+    public void pay(Long amount, LocalDateTime now) {
+        if (amount == null || amount <= 0) {
+            throw new IllegalArgumentException("AMOUNT_MUST_BE_POSITIVE");
+        }
+        if (!"UNPAID".equals(this.status)) {
+            throw new IllegalStateException("INVALID_STATUS:" + this.status);
+        }
+        if (!amount.equals(this.amountDue)) {
+            throw new IllegalArgumentException("AMOUNT_MISMATCH due=" + this.amountDue + " req=" + amount);
+        }
+
+        this.amountPaid = amount;
+        this.status = "PAID";
+        this.paidAt = now;
+        this.updatedAt = now;
+        this.versionNo = this.versionNo + 1;
+    }
+
 }

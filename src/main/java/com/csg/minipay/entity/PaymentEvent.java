@@ -49,4 +49,25 @@ public class PaymentEvent {
         e.amount = amount;
         return e;
     }
+    public static PaymentEvent paySuccess(Payment payment, String requestId, Long amount) {
+        PaymentEvent e = new PaymentEvent();
+        e.payment = payment;
+        e.eventType = "PAY";
+        e.eventStatus = "SUCCESS";
+        e.requestId = requestId;
+        e.amount = amount;
+        return e;
+    }
+
+    public static PaymentEvent payFailed(Payment payment, String requestId, Long amount, String errorCode, String errorMsg) {
+        PaymentEvent e = new PaymentEvent();
+        e.payment = payment;
+        e.eventType = "PAY";
+        e.eventStatus = "FAILED";
+        e.requestId = requestId;
+        e.amount = amount;
+        e.errorCode = errorCode;
+        e.errorMsg = errorMsg;
+        return e;
+    }
 }
