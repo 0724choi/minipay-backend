@@ -32,4 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 /.apt_generated_tests/
+<<<<<<< HEAD
 /n.metadata/
+=======
+/n.metadata/
+>>>>>>> ecb290842944392f3adf74e7e01308e4dc4d083a
