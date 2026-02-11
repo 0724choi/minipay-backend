@@ -71,5 +71,26 @@ public class Payment {
         this.updatedAt = now;
         this.versionNo = this.versionNo + 1;
     }
+    
+    public void cancel(LocalDateTime now) {
+        if ("CANCELED".equals(this.status)) {
+            throw new IllegalStateException("ALREADY_CANCELED");
+        }
+
+        if ("PAID".equals(this.status)) {
+            // v1 정책: 전액 취소(환불)로 간주 → paid 정보 되돌림
+            this.amountPaid = 0L;
+            this.paidAt = null;
+        } else if ("UNPAID".equals(this.status)) {
+            // 미납 취소: 금액 변화 없음
+        } else {
+            throw new IllegalStateException("INVALID_STATUS:" + this.status);
+        }
+
+        this.status = "CANCELED";
+        this.canceledAt = now;
+        this.updatedAt = now;
+        this.versionNo = this.versionNo + 1;
+    }
 
 }

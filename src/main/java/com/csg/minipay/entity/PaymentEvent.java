@@ -70,4 +70,26 @@ public class PaymentEvent {
         e.errorMsg = errorMsg;
         return e;
     }
+    
+    public static PaymentEvent cancelSuccess(Payment payment, String requestId, Long amount) {
+        PaymentEvent e = new PaymentEvent();
+        e.payment = payment;
+        e.eventType = "CANCEL";
+        e.eventStatus = "SUCCESS";
+        e.requestId = requestId;
+        e.amount = amount;
+        return e;
+    }
+
+    public static PaymentEvent cancelFailed(Payment payment, String requestId, Long amount, String errorCode, String errorMsg) {
+        PaymentEvent e = new PaymentEvent();
+        e.payment = payment;
+        e.eventType = "CANCEL";
+        e.eventStatus = "FAILED";
+        e.requestId = requestId;
+        e.amount = amount;
+        e.errorCode = errorCode;
+        e.errorMsg = errorMsg;
+        return e;
+    }
 }

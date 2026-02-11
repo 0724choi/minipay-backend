@@ -37,4 +37,25 @@ public class PaymentProcedureRepository {
                 (String) query.getOutputParameterValue(5)
         );
     }
+
+    public ProcResult cancelDbManaged(Long paymentId, String requestId) {
+
+        StoredProcedureQuery query =
+                em.createStoredProcedureQuery("PAYMENT_TXN_PKG.CANCEL_DB_MANAGED");
+
+        query.registerStoredProcedureParameter(1, Long.class, ParameterMode.IN);     // p_payment_id
+        query.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);   // p_request_id
+        query.registerStoredProcedureParameter(3, String.class, ParameterMode.OUT); // o_result_code
+        query.registerStoredProcedureParameter(4, String.class, ParameterMode.OUT); // o_result_msg
+
+        query.setParameter(1, paymentId);
+        query.setParameter(2, requestId);
+
+        query.execute();
+
+        return new ProcResult(
+                (String) query.getOutputParameterValue(3),
+                (String) query.getOutputParameterValue(4)
+        );
+    }
 }

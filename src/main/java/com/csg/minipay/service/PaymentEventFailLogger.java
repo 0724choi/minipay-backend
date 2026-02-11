@@ -25,4 +25,14 @@ public class PaymentEventFailLogger {
                 PaymentEvent.payFailed(payment, requestId, amount, errorCode, errorMsg)
         );
     }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void logCancelFailed(Long paymentId, String requestId, Long amount, String errorCode, String errorMsg) {
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new IllegalStateException("PAYMENT_NOT_FOUND_FOR_FAIL_LOG"));
+
+        paymentEventRepository.save(
+                PaymentEvent.cancelFailed(payment, requestId, amount, errorCode, errorMsg)
+        );
+    }
 }

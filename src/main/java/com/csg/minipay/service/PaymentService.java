@@ -15,4 +15,8 @@ public class PaymentService {
     public ProcResult pay(Long paymentId, String requestId, Long amount) {
         return repository.payDbManaged(paymentId, requestId, amount);
     }
+    
+    public ProcResult cancel(Long paymentId, String requestId) {
+        return repository.cancelDbManaged(paymentId, requestId);
+    }
 }
